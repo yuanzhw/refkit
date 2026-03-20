@@ -1,31 +1,35 @@
 {
-    "name": "Go Dev Environment",
-    // 使用微软官方维护的 Go 容器镜像（包含 Go 环境和基础工具）
+    "name": "Go Dev with Oh My Zsh",
     "image": "mcr.microsoft.com/devcontainers/go:1.26-bookworm",
-
-    // 容器启动后自动安装的 VS Code 插件
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "golang.Go",          // Go 核心插件
-                "editorconfig.editorconfig", // 代码格式规范
-                "eamodio.gitlens"     // 强大的 Git 增强
-            ],
-            "settings": {
-                "go.toolsManagement.checkForUpdates": "local",
-                "go.useLanguageServer": true
-            }
-        }
-    },
-
-    // 自动安装一些常用的附加功能（比如常见的 Linux 工具）
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
-            "installZsh": true,
-            "configureZshAsDefaultShell": true
+        "installZsh": true,
+        "configureZshAsDefaultShell": true,
+        "installOhMyZsh": true
+    }
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                // 确保 VS Code 集成终端默认打开 Zsh
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "go.useLanguageServer": true,
+                // 关键：防止在代理不稳定时频繁弹出更新提示
+                "go.toolsManagement.checkForUpdates": "local",
+                // 关键：保存时自动格式化代码并整理 import（Go 开发标配）
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": "explicit"
+                },
+                // 让 VS Code 窗口标题显示当前的 WSL 路径
+                "window.title": "${dirty}${activeEditorShort}${separator}${rootName} [WSL]"
+            },
+            "extensions": [
+                "golang.Go",
+                "eamodio.gitlens"
+            ]
         }
     },
-
-    // 以前台用户身份运行，避免权限问题
+    // 微软镜像默认创建的用户是 vscode
     "remoteUser": "vscode"
 }
