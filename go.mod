@@ -1,4 +1,4 @@
-module refkit
+module github.com/yuanzhw/refkit
 
 go 1.26.1
 

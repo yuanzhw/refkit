@@ -1,7 +1,7 @@
 package main
 
 import (
-	"refkit/cmd"
+	"github.com/yuanzhw/refkit/cmd"
 )
 
 func main() {
