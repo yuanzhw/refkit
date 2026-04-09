@@ -23,7 +23,7 @@ var addCmd = &cobra.Command{
 		fmt.Println("🚀 正在初始化入库流程...")
 		fmt.Printf("📂 使用数据库: %s\n", dbPath) // 可以直接读取 root.go 中定义的全局变量
 		fmt.Printf("📦 数据信息: [%s] %s (版本: %s)\n", dataType, dataName, dataVer)
-		
+
 		if dataSource != "" {
 			fmt.Printf("⬇️  下载来源: %s\n", dataSource)
 		}

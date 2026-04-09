@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-    // 启动 Cobra 的根命令执行引擎
+	// 启动 Cobra 的根命令执行引擎
 	cmd.Execute()
 }
