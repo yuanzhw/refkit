@@ -73,3 +73,28 @@ func SaveResource(db *sql.DB, name string, resType string, version string) (*Res
 		Status:  initialStatus,
 	}, nil
 }
+
+// ==========================================
+// 3. 状态更新与闭环记录
+// ==========================================
+
+// UpdateResourceStatus 修改资源的核心状态 (如: ready, error)
+func UpdateResourceStatus(db *sql.DB, id string, status string) error {
+	query := `UPDATE resources SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`
+	_, err := db.Exec(query, status, id)
+	return err
+}
+
+// SaveFilePath 记录物理文件在硬盘上的位置和大小
+func SaveFilePath(db *sql.DB, resourceID string, relativePath string, sizeBytes int64) error {
+	query := `INSERT INTO file_paths (resource_id, relative_path, size_bytes) VALUES (?, ?, ?)`
+	_, err := db.Exec(query, resourceID, relativePath, sizeBytes)
+	return err
+}
+
+// SaveProvenanceLog 写入极其关键的“血缘溯源”记录
+func SaveProvenanceLog(db *sql.DB, resourceID string, source string, method string, checksum string, operator string) error {
+	query := `INSERT INTO provenance_log (resource_id, original_source, ingest_method, checksum, operator) VALUES (?, ?, ?, ?, ?)`
+	_, err := db.Exec(query, resourceID, source, method, checksum, operator)
+	return err
+}
